@@ -30,7 +30,10 @@ Nick: I live a few blocks away and will be ready and able for paired programming
 
 Slack, trello.
 
-## Abilities Expectations (Technical strengths and areas for desired improvement): Laura: Really good with javascript, React makes me feel like I don't know it. Get better at how react works Nick: Same. Really want to get gud at managing API calls and postman, what even is it, etc.
+## Abilities Expectations (Technical strengths and areas for desired improvement):
+
+Jessica: I feel pretty solid on express and knex concepts, but I need more practice writing the code. I would also like more practice with refactoring.
+Nick:
 
 ## Workload Expectations (What features do we each want to work on?):
 
