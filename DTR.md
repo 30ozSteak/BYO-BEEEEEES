@@ -33,7 +33,8 @@ Slack, trello.
 ## Abilities Expectations (Technical strengths and areas for desired improvement):
 
 Jessica: I feel pretty solid on express and knex concepts, but I need more practice writing the code. I would also like more practice with refactoring.
-Nick:
+
+Nick: Knex, Express, and having some fun with scraping would be pretty great.
 
 ## Workload Expectations (What features do we each want to work on?):
 
@@ -45,7 +46,9 @@ Very small, granular git commits. Descriptive commit messages. Pull request temp
 
 ## Agenda to discuss project launch:
 
-Day 1 kickoff - Clear all EOD requirements, get DB schema approved
+Day 1 Kickoff - Clear all EOD requirements, get DB schema approved
+Day 2 Data - Pull data in for tables. We decided Nick would scrape the web for all descriptions of the bees, pulling from google, and Jessica would grab their locations and host (pest/food) information
+Day 3 Cleaning up Data - Nick : finish massive bee object, seed into DB, prepare for tomorrow. Jessica:
 
 ## Tools: Trello
 
