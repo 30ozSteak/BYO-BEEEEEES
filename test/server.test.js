@@ -28,14 +28,14 @@ describe('API Routes', () => {
   });
 
   describe('POST /api/v1/locations', () => {
-    it('should respond with a status of 201 if request body is complete', () => {
+    it('should respond with a status of 201 if request body is complete', (done) => {
       const newLocation = {name: 'Bumble', abbr: 'BB', count: 65}
       chai.request(app)
         .post('/api/v1/locations')
         .send(newLocation)
         .end((error, response) => {
           expect(response).to.have.status(201);
-          // expect().to.deep.include(newLocation);
+          done();
         })
     });
 
@@ -43,8 +43,16 @@ describe('API Routes', () => {
 
     });
 
-    it('should respond with a status of 422 if the request body is incomplete, with instructions to make a complete request', () => {
+    it('should respond with a status of 422 if the request body is incomplete, with instructions to make a complete request', (done) => {
+      const newLocation = {name: 'Bumble', count: 65};
 
+      chai.request(app)
+        .post('/api/v1/locations')
+        .send(newLocation)
+        .end((error, response) => {
+          expect(response).to.have.status(422);
+          done();
+        });
     });
 
     it('should respond with a status of 409 if the location already exists, with instructions to do a PATCH instead', () => {
