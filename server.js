@@ -11,7 +11,20 @@ app.get("/api/v1/locations", (request, response) => {
 });
 
 app.get("/api/v1/locations/:id", (request, response) => {
-  response.status(200).send();
+  let bees = [{}, {}, {}];
+
+  response.status(200).json(bees);
+});
+
+app.post("/api/v1/locations/:id", (request, response) => {
+  const newBee = request.body;
+  if (newBee.name && newBee.desc && newBee.beeFact) {
+    response.status(201).send({ message: `Bee ${newBee.name} added.` });
+  } else {
+    response.status(422).send({
+      message: "You messed up"
+    });
+  }
 });
 
 app.post("/api/v1/locations", (request, response) => {

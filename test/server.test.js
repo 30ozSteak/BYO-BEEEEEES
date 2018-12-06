@@ -71,15 +71,49 @@ describe("API Routes", () => {
         });
     });
 
-    it("should return a json object, with the location as the key and an array of all associated bees, with each bee being an object with the bee id as the key and the name of the species as the value", () => {});
+    it("should return a json object, with the location as the key and an array of all associated bees, with each bee being an object with the bee id as the key and the name of the species as the value", done => {
+      chai
+        .request(app)
+        .get("/api/v1/locations/5")
+        .end((error, response) => {
+          expect(response).to.be.json;
+          expect(response.body).to.be.an("array");
+          expect(response.body[0]).to.be.an("object");
+          done();
+        });
+    });
   });
 
   describe("POST /api/v1/locations/:id", () => {
-    it("should respond with a status of 201 if request body is complete", () => {});
+    it("should respond with a status of 201 if request body is complete", done => {
+      const newBee = {
+        name: "Bee",
+        desc: "Yellow",
+        beeFact: "doesnt like apples"
+      };
+      chai
+        .request(app)
+        .post("/api/v1/locations/5")
+        .send(newBee)
+        .end((error, response) => {
+          expect(response).to.have.status(201);
+          done();
+        });
+    });
 
     it("should add a new bee to the bees database if the request body is complete", () => {});
 
-    it("should respond with a status of 422 if the request body is incomplete, with instructions to make a complete request", () => {});
+    it("should respond with a status of 422 if the request body is incomplete, with instructions to make a complete request", done => {
+      const newBee = { name: "", beeFact: "" };
+      chai
+        .request(app)
+        .post("/api/v1/locations/5")
+        .send(newBee)
+        .end((error, response) => {
+          expect(response).to.have.status(422);
+          done();
+        });
+    });
 
     it("should respond with a status of 409 if the bee already exists, with instructions to do a PATCH instead", () => {});
   });
