@@ -65,7 +65,13 @@ describe('API Routes', () => {
   });
 
   describe('GET /api/v1/bees/:bee_id', () => {
-    // returns the bee description and bee fact about this bee;
+    it('should respond with a status of 200', () => {
+
+    });
+
+    it('should return a json object with bee name, description, and bee fact', () => {
+
+    });
   });
 
   describe('PATCH /api/v1/bees/:bee_id', () => {
