@@ -46,10 +46,16 @@ Very small, granular git commits. Descriptive commit messages. Pull request temp
 
 ## Agenda to discuss project launch:
 
-Day 1 Kickoff - Clear all EOD requirements, get DB schema approved
-Day 2 Data - Pull data in for tables. We decided Nick would scrape the web for all descriptions of the bees, pulling from google, and Jessica would grab their locations and host (pest/food) information
-Day 3 Cleaning up Data - Nick : finish massive bee object, seed into DB, prepare for tomorrow. Jessica:
+Day 1 Kickoff - Clear all EOD requirements, get DB schema approved ✅
 
+Day 2 Data - Pull data in for tables.
+Nick: write scraper ✅ / scrape the web for all descriptions of the bees ✅
+Jessica: grab their locations and host (pest/food) information ❌
+
+Day 3 Data - Cleaning up and seeding DB
+Nick: finish massive bee object ✅, seeding database, Documentation?
+
+Jessica: finish grabbing info and seeding the db, start writing tests for endpoints
 ## Tools: Trello
 
 Additional Notes: Have a good day 😃
