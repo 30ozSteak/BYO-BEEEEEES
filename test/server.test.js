@@ -7,7 +7,13 @@ chai.use(chaiHTTP);
 
 describe('API Routes', () => {
   describe('GET /api/v1/locations', () => {
-    // returns all locations with bee species count;
+    it('should return a status of 200', () => {
+
+    });
+
+    it('should return a json array of all locations', () => {
+
+    });
   });
 
   describe('POST /api/v1/locations', () => {
