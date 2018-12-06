@@ -78,7 +78,17 @@ describe('API Routes', () => {
     });
   });
 
-  describe('GET /api/v1/bees/:bee_id', () => {
+  describe('DELETE /api/v1/locations/:id', () => {
+    it('should return a status of 202 if the location exists', () => {
+
+    });
+
+    it('should return a status of 404 if the location does not exist', () => {
+
+    });
+  });
+
+  describe('GET /api/v1/bees/:id', () => {
     it('should respond with a status of 200', () => {
 
     });
@@ -88,7 +98,7 @@ describe('API Routes', () => {
     });
   });
 
-  describe('PATCH /api/v1/bees/:bee_id', () => {
+  describe('PATCH /api/v1/bees/:id', () => {
     it('should respond with a status of 202 if the request body is appropriate', () => {
 
     });
@@ -103,6 +113,16 @@ describe('API Routes', () => {
 
     it('should respond with a status of 404 if the bee with that id doesn\'t exist, with instructions to do a POST instead', () => {
 
+    });
+  });
+
+  describe('DELETE /api/v1/bees/:id', () => {
+    it('should return a status of 202 if the location exists', () => {
+
+    });
+
+    it('should return a status of 404 if the location does not exist', () => {
+      
     });
   });
 });
