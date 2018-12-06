@@ -16,19 +16,27 @@ describe('API Routes', () => {
         })
     });
 
-    it.skip('should return a json array of all locations', () => {
+    it('should return a json array of all locations', (done) => {
       chai.request(app)
         .get('/api/v1/locations')
         .end((error, response) => {
-          expect(response).to.be.json
-          expect(response).to.be.an('array');
+          expect(response).to.be.json;
+          expect(response.body).to.be.an('array');
+          done();
         })
     });
   });
 
   describe('POST /api/v1/locations', () => {
     it('should respond with a status of 201 if request body is complete', () => {
-
+      const newLocation = {name: 'Bumble', abbr: 'BB', count: 65}
+      chai.request(app)
+        .post('/api/v1/locations')
+        .send(newLocation)
+        .end((error, response) => {
+          expect(response).to.have.status(201);
+          // expect().to.deep.include(newLocation);
+        })
     });
 
     it('should add a new location to the database if request body is complete', () => {
