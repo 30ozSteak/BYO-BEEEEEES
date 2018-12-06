@@ -61,7 +61,21 @@ describe('API Routes', () => {
   });
 
   describe('PATCH /api/v1/locations/:id', () => {
-    // updates location with any new info;
+    it('should respond with a status of 202 if the request body is appropriate', () => {
+
+    });
+
+    it('should patch the location if the request body is appropriate', () => {
+
+    });
+
+    it('should respond with a status of 422 if the request body is not appropriate', ()=> {
+
+    });
+
+    it('should respond with a status of 404 if the location with that id doesn\'t exist, with instructions to do a POST instead', () => {
+
+    });
   });
 
   describe('GET /api/v1/bees/:bee_id', () => {
@@ -75,6 +89,20 @@ describe('API Routes', () => {
   });
 
   describe('PATCH /api/v1/bees/:bee_id', () => {
-    // updates bee with any new info;
+    it('should respond with a status of 202 if the request body is appropriate', () => {
+
+    });
+
+    it('should patch the bee if the request body is appropriate', () => {
+
+    });
+
+    it('should respond with a status of 422 if the request body is not appropriate', ()=> {
+
+    });
+
+    it('should respond with a status of 404 if the bee with that id doesn\'t exist, with instructions to do a POST instead', () => {
+
+    });
   });
 });
