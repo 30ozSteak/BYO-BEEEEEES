@@ -7,11 +7,12 @@ chai.use(chaiHTTP);
 
 describe('API Routes', () => {
   describe('GET /api/v1/locations', () => {
-    it('should respond with a status of 200', () => {
+    it('should respond with a status of 200', (done) => {
       chai.request(app)
-        .get('api/v1/locations')
+        .get('/api/v1/locations')
         .end((error, response) => {
           expect(response).to.have.status(200);
+          done();
         })
     });
 
@@ -66,7 +67,9 @@ describe('API Routes', () => {
 
     });
 
-    it('should respond with a status of 409 if the bee already exists, with instructions to do a PATCH instead');
+    it('should respond with a status of 409 if the bee already exists, with instructions to do a PATCH instead', () => {
+
+    });
   });
 
   describe('PATCH /api/v1/locations/:id', () => {
