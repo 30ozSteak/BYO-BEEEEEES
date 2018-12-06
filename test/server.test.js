@@ -8,7 +8,11 @@ chai.use(chaiHTTP);
 describe('API Routes', () => {
   describe('GET /api/v1/locations', () => {
     it('should respond with a status of 200', () => {
-
+      chai.request(app)
+        .get('api/v1/locations')
+        .end((error, response) => {
+          assert.equal(response.status, 200);
+        })
     });
 
     it('should return a json array of all locations', () => {
@@ -122,7 +126,7 @@ describe('API Routes', () => {
     });
 
     it('should return a status of 404 if the location does not exist', () => {
-      
+
     });
   });
 });
