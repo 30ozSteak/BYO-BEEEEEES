@@ -1,5 +1,5 @@
 const chai = require('chai');
-const assert = chai.assert;
+const expect = chai.expect;
 const chaiHTTP = require('chai-http');
 const app = require('../server.js');
 
@@ -11,12 +11,17 @@ describe('API Routes', () => {
       chai.request(app)
         .get('api/v1/locations')
         .end((error, response) => {
-          assert.equal(response.status, 200);
+          expect(response).to.have.status(200);
         })
     });
 
-    it('should return a json array of all locations', () => {
-
+    it.skip('should return a json array of all locations', () => {
+      chai.request(app)
+        .get('/api/v1/locations')
+        .end((error, response) => {
+          expect(response).to.be.json
+          expect(response).to.be.an('array');
+        })
     });
   });
 
