@@ -140,6 +140,8 @@ describe("API Routes", () => {
         .get("/api/v1/location/5")
         .end((error, response) => {
           expect(response).to.be.json;
+          expect(response.body).to.be.an("array");
+          expect(response.body[0]).to.be.an("object");
           done();
         });
     });
