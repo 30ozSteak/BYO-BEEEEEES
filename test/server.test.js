@@ -2,6 +2,9 @@ const chai = require("chai");
 const expect = chai.expect;
 const chaiHTTP = require("chai-http");
 const app = require("../server.js");
+const environment = process.env.NODE_ENV || "testing";
+const configuration = require("../knexfile")[environment];
+const database = require("knex")(configuration);
 
 chai.use(chaiHTTP);
 
@@ -13,6 +16,7 @@ describe("API Routes", () => {
       .then(() => database.seed.run())
       .then(() => done());
   });
+
   describe("GET /api/v1/locations", () => {
     it("should respond with a status of 200", done => {
       chai
@@ -30,7 +34,6 @@ describe("API Routes", () => {
         .get("/api/v1/locations")
         .end((error, response) => {
           expect(response).to.be.json;
-          // response.data.includes(specific bee);
           expect(response.body).to.deep.include.members([
             {
               name: "Swaziland",
