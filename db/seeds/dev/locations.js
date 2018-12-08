@@ -286,3 +286,5 @@ let countries = [
     ]
   }
 ];
+
+module.exports = countries;
