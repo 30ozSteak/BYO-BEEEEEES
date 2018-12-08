@@ -30,14 +30,33 @@ app.post("/api/v1/locations", (request, response) => {
     });
   }
   database("locations")
-    .insert(location, "id")
-    .then(location => {
-      response
-        .status(201)
-        .send("you did it and added a location for bees to hang out in");
+    .select()
+
+    .then(locations => {
+      const isIncluded = locations.some(existingLocation => {
+        const sameName = existingLocation.name === location.name;
+        const sameAbbr = existingLocation.abbr === location.abbr;
+        const sameCount = existingLocation.count === location.count;
+        return sameName && sameAbbr && sameCount;
+      });
+      if (isIncluded) {
+        return response.status(409).send({
+          message:
+            "You havent successfully added a location because its there already please try a PATCH instead"
+        });
+      }
     })
-    .catch(error => {
-      response.status(500).json(error);
+    .then(() => {
+      database("locations")
+        .insert(location, "id")
+        .then(location => {
+          response
+            .status(201)
+            .send("you did it and added a location for bees to hang out in");
+        })
+        .catch(error => {
+          response.status(500).json(error);
+        });
     });
 });
 

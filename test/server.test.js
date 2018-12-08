@@ -101,7 +101,21 @@ describe("API Routes", () => {
         });
     });
 
-    it("should respond with a status of 409 if the location already exists, with instructions to do a PATCH instead", () => {});
+    it("should respond with a status of 409 if the location already exists, with instructions to do a PATCH instead", done => {
+      const newLocation = {
+        name: "Angola",
+        abbr: "AO",
+        count: 127
+      };
+      chai
+        .request(app)
+        .post("/api/v1/locations")
+        .send(newLocation)
+        .end((error, response) => {
+          expect(response).to.have.status(409);
+          done();
+        });
+    });
   });
 
   // describe("GET /api/v1/locations/:id", () => {
