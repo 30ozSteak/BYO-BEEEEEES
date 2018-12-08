@@ -9,18 +9,18 @@ module.exports = {
       directory: "./db/migrations"
     },
     seeds: {
-      directory: "./db/seeds/dev/beeStuff"
+      directory: "./db/seeds/dev/"
     }
   },
   testing: {
     client: "pg",
-    connection: "postgres://localhost/bees",
+    connection: "postgres://localhost/bees_test",
     useNullAsDefault: true,
     migrations: {
       directory: "./db/migrations"
     },
     seeds: {
-      directory: "./db/seeds/dev/beeStuff"
+      directory: "./db/seeds/dev/"
     }
   },
   production: {
@@ -31,7 +31,7 @@ module.exports = {
       directory: "./db/migrations"
     },
     seeds: {
-      directory: "./db/seeds/dev/beeStuff"
+      directory: "./db/seeds/dev/"
     }
   }
 };

@@ -1,4 +1,4 @@
-const locationsData = require("./locations");
+const locationsData = require("../../../allbees/locations");
 
 const createLocation = (knex, location) => {
   return knex("locations")
