@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const environment = process.env.NODE_ENV || "testing";
+const environment = process.env.NODE_ENV || "development";
 const configuration = require("./knexfile")[environment];
 const database = require("knex")(configuration);
 app.name = "APIary";
@@ -25,7 +25,8 @@ app.post("/api/v1/locations", (request, response) => {
 
   if (!(location.name && location.abbr && location.count)) {
     return response.status(422).send({
-      message: "Your request body was not correct. Please send the following format: {name: <String>, abbr: <String>, count: <Integer>}"
+      message:
+        "Your request body was not correct. Please send the following format: {name: <String>, abbr: <String>, count: <Integer>}"
     });
   }
   database("locations")
@@ -39,7 +40,8 @@ app.post("/api/v1/locations", (request, response) => {
       });
       if (isIncluded) {
         return response.status(409).send({
-          message: "You havent successfully added a location because its there already please try a PATCH instead"
+          message:
+            "You havent successfully added a location because its there already please try a PATCH instead"
         });
       }
       database("locations")
@@ -56,19 +58,12 @@ app.post("/api/v1/locations", (request, response) => {
 });
 
 app.get("/api/v1/location/:id", (request, response) => {
-  let {
-    id
-  } = request.params;
+  let { id } = request.params;
   database("bees")
+    .where("location_id", id)
     .select()
     .then(bees => {
-      // let relevantBees = bees.filter(bee => {
-      //   return bee.location_id === id;
-      // });
-      // response.status(200).json(relevantBees);
-      response.status(200).json({
-        message: "it worked"
-      });
+      response.status(200).json(bees);
     })
     .catch(error => {
       response.status(500).json(error);
@@ -86,8 +81,8 @@ app.get("/api/v1/location/:id", (request, response) => {
 //   }
 // });
 
-// app.listen(app.get("port"), () => {
-//   console.log(`${app.name} is running on ${app.get("port")}.`);
-// });
+app.listen(app.get("port"), () => {
+  console.log(`${app.name} is running on ${app.get("port")}.`);
+});
 
 module.exports = app;

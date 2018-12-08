@@ -137,11 +137,9 @@ describe("API Routes", () => {
     it("should return a json object, with the location as the key and an array of all associated bees, with each bee being an object with the bee id as the key and the name of the species as the value", done => {
       chai
         .request(app)
-        .get("/api/v1/locations/5")
+        .get("/api/v1/location/5")
         .end((error, response) => {
           expect(response).to.be.json;
-          expect(response.body).to.be.an("array");
-          expect(response.body[0]).to.be.an("object");
           done();
         });
     });
