@@ -25,8 +25,7 @@ app.post("/api/v1/locations", (request, response) => {
 
   if (!(location.name && location.abbr && location.count)) {
     return response.status(422).send({
-      message:
-        "Your request body was not correct. Please send the following format: {name: <String>, abbr: <String>, count: <Integer>}"
+      message: "Your request body was not correct. Please send the following format: {name: <String>, abbr: <String>, count: <Integer>}"
     });
   }
   database("locations")
@@ -40,12 +39,9 @@ app.post("/api/v1/locations", (request, response) => {
       });
       if (isIncluded) {
         return response.status(409).send({
-          message:
-            "You havent successfully added a location because its there already please try a PATCH instead"
+          message: "You havent successfully added a location because its there already please try a PATCH instead"
         });
       }
-    })
-    .then(() => {
       database("locations")
         .insert(location, "id")
         .then(location => {
@@ -59,9 +55,25 @@ app.post("/api/v1/locations", (request, response) => {
     });
 });
 
-// app.get("/api/v1/locations/:id", (request, response) => {
-//   response.status(200).json(bees);
-// });
+app.get("/api/v1/location/:id", (request, response) => {
+  let {
+    id
+  } = request.params;
+  database("bees")
+    .select()
+    .then(bees => {
+      // let relevantBees = bees.filter(bee => {
+      //   return bee.location_id === id;
+      // });
+      // response.status(200).json(relevantBees);
+      response.status(200).json({
+        message: "it worked"
+      });
+    })
+    .catch(error => {
+      response.status(500).json(error);
+    });
+});
 
 // app.post("/api/v1/locations/:id", (request, response) => {
 //   const newBee = request.body;
