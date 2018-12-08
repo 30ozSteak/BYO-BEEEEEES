@@ -23,14 +23,22 @@ app.get("/api/v1/locations", (request, response) => {
 app.post("/api/v1/locations", (request, response) => {
   const location = request.body;
 
-  if (location.name && location.abbr && location.count) {
-    response.status(201).send({ message: `Location ${location.name} added.` });
-  } else {
+  if (!(location.name && location.abbr && location.count)) {
     response.status(422).send({
       message:
         "Your request body was not correct. Please send the following format: {name: <String>, abbr: <String>, count: <Integer>}"
     });
   }
+  database("locations")
+    .insert(location, "id")
+    .then(location => {
+      response
+        .status(201)
+        .send("you did it and added a location for bees to hang out in");
+    })
+    .catch(error => {
+      response.status(500).json(error);
+    });
 });
 
 // app.get("/api/v1/locations/:id", (request, response) => {

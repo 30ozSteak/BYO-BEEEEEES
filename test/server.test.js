@@ -61,14 +61,25 @@ describe("API Routes", () => {
         });
     });
 
-    it("should add a new location to the database if request body is complete", () => {
+    it("should add a new location to the database if request body is complete", done => {
       const newLocation = { name: "Canada", abbr: "CA", count: 420 };
+      const expected = {
+        name: "Canada",
+        abbr: "CA",
+        count: 420,
+        id: 9
+      };
       chai
         .request(app)
         .post("/api/v1/locations")
         .send(newLocation)
         .end((error, response) => {
-          expect();
+          database("locations")
+            .select()
+            .then(locations => {
+              expect(locations).to.deep.include(expected);
+              done();
+            });
         });
     });
 
