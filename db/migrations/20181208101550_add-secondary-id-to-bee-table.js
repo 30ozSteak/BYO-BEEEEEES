@@ -15,9 +15,8 @@ exports.up = function(knex, Promise) {
 
 exports.down = function(knex, Promise) {
   return Promise.all([
-    knex.schema.table("locations", function(table) {
-      table.dropColumn("count");
-      table.string("count");
+    knex.schema.alterTable("locations", function(table) {
+      table.string("count").alter();
     }),
     knex.schema.table("bees", function(table) {
       table.dropForeign("location_id");
