@@ -83,20 +83,25 @@ describe("API Routes", () => {
         });
     });
 
-    // it("should respond with a status of 422 if the request body is incomplete, with instructions to make a complete request", done => {
-    //   const newLocation = { name: "Bumble", count: 65 };
+    it("should respond with a status of 422 if the request body is incomplete, with instructions to make a complete request", done => {
+      const newLocation = { name: "Bumble", count: 65 };
 
-    //   chai
-    //     .request(app)
-    //     .post("/api/v1/locations")
-    //     .send(newLocation)
-    //     .end((error, response) => {
-    //       expect(response).to.have.status(422);
-    //       done();
-    //     });
-    // });
+      chai
+        .request(app)
+        .post("/api/v1/locations")
+        .send(newLocation)
+        .end((error, response) => {
+          expect(response).to.have.status(422);
+          database("locations")
+            .select()
+            .then(locations => {
+              expect(locations).to.have.length(8);
+              done();
+            });
+        });
+    });
 
-    // it("should respond with a status of 409 if the location already exists, with instructions to do a PATCH instead", () => {});
+    it("should respond with a status of 409 if the location already exists, with instructions to do a PATCH instead", () => {});
   });
 
   // describe("GET /api/v1/locations/:id", () => {

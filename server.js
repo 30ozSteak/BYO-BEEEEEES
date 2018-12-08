@@ -24,7 +24,7 @@ app.post("/api/v1/locations", (request, response) => {
   const location = request.body;
 
   if (!(location.name && location.abbr && location.count)) {
-    response.status(422).send({
+    return response.status(422).send({
       message:
         "Your request body was not correct. Please send the following format: {name: <String>, abbr: <String>, count: <Integer>}"
     });
