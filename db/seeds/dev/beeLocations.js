@@ -1,73 +1,190 @@
 let beeLocations = [
   {
     Angola: [
-      "Euaspis abdominalis",
-      "Hylaeus gabonicus",
-      "Lipotriches notabilis",
-      "Nomia amabilis",
-      "Thyreus abyssinicus"
+      {
+        name: "Euaspis abdominalis",
+        desc: "its a bee"
+      },
+      {
+        name: "Hylaeus gabonicus",
+        desc: "its a bee"
+      },
+      {
+        name: "Lipotriches notabilis",
+        desc: "its a bee"
+      },
+      {
+        name: "Nomia amabilis",
+        desc: "its a bee"
+      },
+      {
+        name: "Thyreus abyssinicus",
+        desc: "its a bee"
+      }
     ]
   },
   {
     Haiti: [
-      "Agapostemon centratus",
-      "Augochlora magnifica",
-      "Coelioxys vigilans",
-      "Megachile lanata",
-      "Xeromelecta haitensis"
+      {
+        name: "Agapostemon centratus",
+        desc: "its a bee"
+      },
+      {
+        name: "Augochlora magnifica",
+        desc: "its a bee"
+      },
+      {
+        name: "Coelioxys vigilans",
+        desc: "its a bee"
+      },
+      {
+        name: "Megachile lanata",
+        desc: "its a bee"
+      },
+      {
+        name: "Xeromelecta haitensis",
+        desc: "its a bee"
+      }
     ]
   },
   {
     Iceland: [
-      "Bombus hortorum",
-      "Bombus hypnorum",
-      "Bombus jonellus",
-      "Bombus lucorum",
-      "Bombus pascuorum"
+      {
+        name: "Bombus hortorum",
+        desc: "its a bee"
+      },
+      {
+        name: "Bombus hypnorum",
+        desc: "its a bee"
+      },
+      {
+        name: "Bombus jonellus",
+        desc: "its a bee"
+      },
+      {
+        name: "Bombus lucorum",
+        desc: "its a bee"
+      },
+      {
+        name: "Bombus pascuorum",
+        desc: "its a bee"
+      }
     ]
   },
   {
     Namibia: [
-      "Afranthidium abdominale",
-      "Anthophora labrosa",
-      "Epeolus amabilis",
-      "Megachile gobabebensis",
-      "Patellapis abnormis"
+      {
+        name: "Afranthidium abdominale",
+        desc: "its a bee"
+      },
+      {
+        name: "Anthophora labrosa",
+        desc: "its a bee"
+      },
+      {
+        name: "Epeolus amabilis",
+        desc: "its a bee"
+      },
+      {
+        name: "Megachile gobabebensis",
+        desc: "its a bee"
+      },
+      {
+        name: "Patellapis abnormis",
+        desc: "its a bee"
+      }
     ]
   },
   {
     SanMarino: [
-      "Andrena quintilis",
-      "Apis mellifera",
-      "Bombus terrestris",
-      "Megachile trigonaspis"
+      {
+        name: "Andrena quintilis",
+        desc: "its a bee"
+      },
+      {
+        name: "Apis mellifera",
+        desc: "its a bee"
+      },
+      {
+        name: "Bombus terrestris",
+        desc: "its a bee"
+      },
+      {
+        name: "Megachile trigonaspis",
+        desc: "its a bee"
+      }
     ]
   },
   {
     Swaziland: [
-      "Amegilla capensis",
-      "Apis mellifera",
-      "Lipotriches cribrosa",
-      "Megachile mossambica",
-      "Thyreus delumbatus"
+      {
+        name: "Amegilla capensis",
+        desc: "its a bee"
+      },
+      {
+        name: "Apis mellifera",
+        desc: "its a bee"
+      },
+      {
+        name: "Lipotriches cribrosa",
+        desc: "its a bee"
+      },
+      {
+        name: "Megachile mossambica",
+        desc: "its a bee"
+      },
+      {
+        name: "Thyreus delumbatus",
+        desc: "its a bee"
+      }
     ]
   },
   {
     Trinidad_and_Tobago: [
-      "Augochlora erubescens",
-      "Augochloropsis trinitatis",
-      "Cephalotrigona capitata",
-      "Plebeia tobagoensis",
-      "Trigona amalthea"
+      {
+        name: "Augochlora erubescens",
+        desc: "its a bee"
+      },
+      {
+        name: "Augochloropsis trinitatis",
+        desc: "its a bee"
+      },
+      {
+        name: "Cephalotrigona capitata",
+        desc: "its a bee"
+      },
+      {
+        name: "Plebeia tobagoensis",
+        desc: "its a bee"
+      },
+      {
+        name: "Trigona amalthea",
+        desc: "its a bee"
+      }
     ]
   },
   {
     Vanuatu: [
-      "Lasioglossum ounuense",
-      "Lasioglossum zingowli",
-      "Megachile diligens",
-      "Megachile serricauda",
-      "Palaeorhiza maluae"
+      {
+        name: "Lasioglossum ounuense",
+        desc: "its a bee"
+      },
+      {
+        name: "Lasioglossum zingowli",
+        desc: "its a bee"
+      },
+      {
+        name: "Megachile diligens",
+        desc: "its a bee"
+      },
+      {
+        name: "Megachile serricauda",
+        desc: "its a bee"
+      },
+      {
+        name: "Palaeorhiza maluae",
+        desc: "its a bee"
+      }
     ]
   }
 ];
