@@ -26,6 +26,14 @@ describe("API Routes", () => {
         .end((error, response) => {
           expect(response).to.be.json;
           // response.data.includes(specific bee);
+          expect(response.body).to.deep.include.members([
+            {
+              name: "Swaziland",
+              abbr: "WZ",
+              count: 15,
+              id: 6
+            }
+          ]);
           expect(response.body).to.be.an("array");
           done();
         });
