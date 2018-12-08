@@ -33,19 +33,20 @@ describe("API Routes", () => {
         .request(app)
         .get("/api/v1/locations")
         .end((error, response) => {
-          let location = {
+          let startingLocation = {
             name: "Swaziland",
             abbr: "WZ",
             count: 15
           };
-          let includes = response.body.some(existingLocation => {
-            const sameName = existingLocation.name === location.name;
-            const sameAbbr = existingLocation.abbr === location.abbr;
-            const sameCount = existingLocation.count === location.count;
-            return sameName && sameAbbr && sameCount;
+          let allLocations = response.body.map(location => {
+            return {
+              name: location.name,
+              abbr: location.abbr,
+              count: location.count
+            };
           });
+          expect(allLocations).to.deep.include(startingLocation);
           expect(response).to.be.json;
-          expect(includes).to.be.true;
           expect(response.body).to.be.an("array");
           done();
         });

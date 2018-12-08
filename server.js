@@ -31,7 +31,6 @@ app.post("/api/v1/locations", (request, response) => {
   }
   database("locations")
     .select()
-
     .then(locations => {
       const isIncluded = locations.some(existingLocation => {
         const sameName = existingLocation.name === location.name;
