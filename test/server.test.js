@@ -3,11 +3,16 @@ const expect = chai.expect;
 const chaiHTTP = require("chai-http");
 const app = require("../server.js");
 
-//dev & test db need to be seeded ~
-
 chai.use(chaiHTTP);
 
 describe("API Routes", () => {
+  beforeEach(done => {
+    database.migrate
+      .rollback()
+      .then(() => database.migrate.latest())
+      .then(() => database.seed.run())
+      .then(() => done());
+  });
   describe("GET /api/v1/locations", () => {
     it("should respond with a status of 200", done => {
       chai
@@ -40,36 +45,45 @@ describe("API Routes", () => {
     });
   });
 
-  // describe("POST /api/v1/locations", () => {
-  //   it("should respond with a status of 201 if request body is complete", done => {
-  //     const newLocation = { name: "Bumble", abbr: "BB", count: 65 };
-  //     chai
-  //       .request(app)
-  //       .post("/api/v1/locations")
-  //       .send(newLocation)
-  //       .end((error, response) => {
-  //         expect(response).to.have.status(201);
-  //         done();
-  //       });
-  //   });
+  describe("POST /api/v1/locations", () => {
+    it("should respond with a status of 201 if request body is complete", done => {
+      const newLocation = { name: "Bumble", abbr: "BB", count: 65 };
+      chai
+        .request(app)
+        .post("/api/v1/locations")
+        .send(newLocation)
+        .end((error, response) => {
+          expect(response).to.have.status(201);
+          done();
+        });
+    });
 
-  //   it("should add a new location to the database if request body is complete", () => {});
+    it("should add a new location to the database if request body is complete", () => {
+      const newLocation = { name: "Canada", abbr: "CA", count: 420 };
+      chai
+        .request(app)
+        .post("/api/v1/locations")
+        .send(newLocation)
+        .end((error, response) => {
+          expect();
+        });
+    });
 
-  //   it("should respond with a status of 422 if the request body is incomplete, with instructions to make a complete request", done => {
-  //     const newLocation = { name: "Bumble", count: 65 };
+    // it("should respond with a status of 422 if the request body is incomplete, with instructions to make a complete request", done => {
+    //   const newLocation = { name: "Bumble", count: 65 };
 
-  //     chai
-  //       .request(app)
-  //       .post("/api/v1/locations")
-  //       .send(newLocation)
-  //       .end((error, response) => {
-  //         expect(response).to.have.status(422);
-  //         done();
-  //       });
-  //   });
+    //   chai
+    //     .request(app)
+    //     .post("/api/v1/locations")
+    //     .send(newLocation)
+    //     .end((error, response) => {
+    //       expect(response).to.have.status(422);
+    //       done();
+    //     });
+    // });
 
-  //   it("should respond with a status of 409 if the location already exists, with instructions to do a PATCH instead", () => {});
-  // });
+    // it("should respond with a status of 409 if the location already exists, with instructions to do a PATCH instead", () => {});
+  });
 
   // describe("GET /api/v1/locations/:id", () => {
   //   it("should respond with a status of 200", done => {

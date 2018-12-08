@@ -20,6 +20,19 @@ app.get("/api/v1/locations", (request, response) => {
     });
 });
 
+app.post("/api/v1/locations", (request, response) => {
+  const location = request.body;
+
+  if (location.name && location.abbr && location.count) {
+    response.status(201).send({ message: `Location ${location.name} added.` });
+  } else {
+    response.status(422).send({
+      message:
+        "Your request body was not correct. Please send the following format: {name: <String>, abbr: <String>, count: <Integer>}"
+    });
+  }
+});
+
 // app.get("/api/v1/locations/:id", (request, response) => {
 //   response.status(200).json(bees);
 // });
@@ -31,19 +44,6 @@ app.get("/api/v1/locations", (request, response) => {
 //   } else {
 //     response.status(422).send({
 //       message: "You messed up"
-//     });
-//   }
-// });
-
-// app.post("/api/v1/locations", (request, response) => {
-//   const location = request.body;
-
-//   if (location.name && location.abbr && location.count) {
-//     response.status(201).send({ message: `Location ${location.name} added.` });
-//   } else {
-//     response.status(422).send({
-//       message:
-//         "Your request body was not correct. Please send the following format: {name: <String>, abbr: <String>, count: <Integer>}"
 //     });
 //   }
 // });
