@@ -1,28 +1,23 @@
 exports.up = function(knex, Promise) {
   return Promise.all([
-    knex.schema.createTable("Bee Species", function(table) {
+    knex.schema.createTable("locations", function(table) {
       table.increments("id").primary();
-      table.string("Species");
-      table.string("Common Name");
-      table.string("BEE FACTS 🐝");
+      table.string("name");
+      table.string("abbr");
+      table.string("count");
     }),
-    knex.schema.createTable("Locations", function(table) {
+    knex.schema.createTable("bees", function(table) {
       table.increments("id").primary();
-      table.string("Region");
-      table.string("Country");
-    }),
-    knex.schema.createTable("Food", function(table) {
-      table.increments("id").primary();
-      table.string("Host");
-      table.string("Description");
+      table.string("name");
+      table.string("desc");
+      table.string("beefact");
     })
   ]);
 };
 
 exports.down = function(knex, Promise) {
   return Promise.all([
-    knex.schema.dropTable("Food"),
-    knex.schema.dropTable("Locations"),
-    knex.schema.dropTable("Bee Species")
+    knex.schema.dropTable("bees"),
+    knex.schema.dropTable("locations")
   ]);
 };

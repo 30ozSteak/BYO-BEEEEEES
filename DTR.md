@@ -55,7 +55,11 @@ Jessica: grab their locations and host (pest/food) information ❌
 Day 3 Data - Cleaning up and seeding DB
 Nick: finish massive bee object ✅, seeding database, Documentation?
 
-Jessica: finish grabbing info and seeding the db, start writing tests for endpoints
+Jessica: finish grabbing info and seeding the db, start writing tests for endpoints❌
+
+Day 5 -
+Everything
+
 ## Tools: Trello
 
 Additional Notes: Have a good day 😃

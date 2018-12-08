@@ -3,6 +3,8 @@ const expect = chai.expect;
 const chaiHTTP = require("chai-http");
 const app = require("../server.js");
 
+//dev & test db need to be seeded ~
+
 chai.use(chaiHTTP);
 
 describe("API Routes", () => {
@@ -23,6 +25,7 @@ describe("API Routes", () => {
         .get("/api/v1/locations")
         .end((error, response) => {
           expect(response).to.be.json;
+          // response.data.includes(specific bee);
           expect(response.body).to.be.an("array");
           done();
         });
