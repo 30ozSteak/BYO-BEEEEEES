@@ -1,4 +1,4 @@
-const locationsData = require("../db/seeds/dev/locations");
+const locationsData = require("./locations");
 
 const createLocation = (knex, location) => {
   return knex("locations")
