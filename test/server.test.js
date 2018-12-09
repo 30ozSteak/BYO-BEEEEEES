@@ -156,39 +156,39 @@ describe("API Routes", () => {
     });
   });
 
-  // describe("POST /api/v1/locations/:id", () => {
-  //   it("should respond with a status of 201 if request body is complete", done => {
-  //     const newBee = {
-  //       name: "Bee",
-  //       desc: "Yellow",
-  //       beeFact: "doesnt like apples"
-  //     };
-  //     chai
-  //       .request(app)
-  //       .post("/api/v1/locations/5")
-  //       .send(newBee)
-  //       .end((error, response) => {
-  //         expect(response).to.have.status(201);
-  //         done();
-  //       });
-  //   });
+  describe("POST /api/v1/location/:id", () => {
+    it("should respond with a status of 201 if request body is complete", done => {
+      const newBee = {
+        name: "Bee",
+        desc: "Yellow",
+        beeFact: "doesnt like apples"
+      };
+      chai
+        .request(app)
+        .post("/api/v1/location/5")
+        .send(newBee)
+        .end((error, response) => {
+          expect(response).to.have.status(201);
+          done();
+        });
+    });
 
-  //   it("should add a new bee to the bees database if the request body is complete", () => {});
+    // it("should add a new bee to the bees database if the request body is complete", done => {});
 
-  //   it("should respond with a status of 422 if the request body is incomplete, with instructions to make a complete request", done => {
-  //     const newBee = { name: "", beeFact: "" };
-  //     chai
-  //       .request(app)
-  //       .post("/api/v1/locations/5")
-  //       .send(newBee)
-  //       .end((error, response) => {
-  //         expect(response).to.have.status(422);
-  //         done();
-  //       });
-  //   });
+    // it("should respond with a status of 422 if the request body is incomplete, with instructions to make a complete request", done => {
+    //   const newBee = { name: "", beeFact: "" };
+    //   chai
+    //     .request(app)
+    //     .post("/api/v1/location/5")
+    //     .send(newBee)
+    //     .end((error, response) => {
+    //       expect(response).to.have.status(422);
+    //       done();
+    //     });
+    // });
 
-  //   it("should respond with a status of 409 if the bee already exists, with instructions to do a PATCH instead", () => {});
-  // });
+    // it("should respond with a status of 409 if the bee already exists, with instructions to do a PATCH instead", done => {});
+  });
 
   // describe("PATCH /api/v1/locations/:id", () => {
   //   it("should respond with a status of 202 if the request body is appropriate", () => {});

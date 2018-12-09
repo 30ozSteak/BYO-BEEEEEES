@@ -69,16 +69,16 @@ app.get("/api/v1/location/:id", (request, response) => {
     });
 });
 
-// app.post("/api/v1/locations/:id", (request, response) => {
-//   const newBee = request.body;
-//   if (newBee.name && newBee.desc && newBee.beeFact) {
-//     response.status(201).send({ message: `Bee ${newBee.name} added.` });
-//   } else {
-//     response.status(422).send({
-//       message: "You messed up"
-//     });
-//   }
-// });
+app.post("/api/v1/location/:id", (request, response) => {
+  const newBee = request.body;
+  if (newBee.name && newBee.desc && newBee.beeFact) {
+    response.status(201).send({ message: `Bee ${newBee.name} added.` });
+  } else {
+    response.status(422).send({
+      message: "You messed up"
+    });
+  }
+});
 
 app.listen(app.get("port"), () => {
   console.log(`${app.name} is running on ${app.get("port")}.`);
