@@ -142,6 +142,13 @@ describe("API Routes", () => {
           expect(response).to.be.json;
           expect(response.body).to.be.an("array");
           expect(response.body[0]).to.be.an("object");
+          expect(response.body[0]).to.have.property("name");
+          expect(response.body[0]).to.have.property("desc");
+          expect(response.body[0]).to.have.property("beefact");
+          expect(response.body[0].name).to.not.be.undefined;
+          expect(response.body[0].desc).to.not.be.undefined;
+          expect(response.body[0].beefact).to.not.be.undefined;
+          expect(response.body[0].location_id).to.equal(5);
           done();
         });
     });
