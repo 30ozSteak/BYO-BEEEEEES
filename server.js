@@ -35,8 +35,7 @@ app.post("/api/v1/locations", (request, response) => {
       const isIncluded = locations.some(existingLocation => {
         const sameName = existingLocation.name === location.name;
         const sameAbbr = existingLocation.abbr === location.abbr;
-        const sameCount = existingLocation.count === location.count;
-        return sameName && sameAbbr && sameCount;
+        return sameName && sameAbbr;
       });
       if (isIncluded) {
         return response.status(409).send({
