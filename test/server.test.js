@@ -141,14 +141,16 @@ describe("API Routes", () => {
         .end((error, response) => {
           expect(response).to.be.json;
           expect(response.body).to.be.an("array");
-          expect(response.body[0]).to.be.an("object");
-          expect(response.body[0]).to.have.property("name");
-          expect(response.body[0]).to.have.property("desc");
-          expect(response.body[0]).to.have.property("beefact");
-          expect(response.body[0].name).to.not.be.undefined;
-          expect(response.body[0].desc).to.not.be.undefined;
-          expect(response.body[0].beefact).to.not.be.undefined;
-          expect(response.body[0].location_id).to.equal(5);
+          for (let i = 0; i < response.body.length; i++) {
+            expect(response.body[i]).to.be.an("object");
+            expect(response.body[i]).to.have.property("name");
+            expect(response.body[i]).to.have.property("desc");
+            expect(response.body[i]).to.have.property("beefact");
+            expect(response.body[i].name).to.not.be.undefined;
+            expect(response.body[i].desc).to.not.be.undefined;
+            expect(response.body[i].beefact).to.not.be.undefined;
+            expect(response.body[i].location_id).to.equal(5);
+          }
           done();
         });
     });
