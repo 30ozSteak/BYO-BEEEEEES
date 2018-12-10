@@ -212,7 +212,22 @@ describe("API Routes", () => {
         });
     });
 
-    // it("should respond with a status of 409 if the bee already exists, with instructions to do a PATCH instead", done => {});
+    it("should respond with a status of 409 if the bee already exists, with instructions to do a PATCH instead", done => {
+      const newBee = {        
+        name: "Lipotriches notabilis",
+        desc: "its a bee",
+        beefact:
+          "Bees have two stomachs - one stomach for eating and the other special stomach is for storing nectar collected from flowers or water so that they can carry it back to their hive."
+        };
+      chai
+        .request(app)
+        .post('/api/v1/location/5')
+        .send(newBee)
+        .end((error, response) => {
+          expect(response).to.have.status(409);
+          done();
+        });
+    });
   });
 
   // describe("PATCH /api/v1/locations/:id", () => {

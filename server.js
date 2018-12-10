@@ -78,14 +78,29 @@ app.post("/api/v1/location/:id", (request, response) => {
     });
   }
   database('bees')
-    .insert({ ...newBee, location_id: id }, 'id')
-    .then(bee => {
-      response
-        .status(201)
-        .send({ message: `Bee ${newBee.name} added.`});
-    })
-    .catch(error => {
-      response.status(500).json(error);
+    .select()
+    .then(bees => {
+      const isIncluded = bees.some(existingBee => {
+        const sameName = existingBee.name === newBee.name;
+        const sameDesc = existingBee.desc === newBee.desc;
+        const sameBeefact = existingBee.beefact === newBee.beefact;
+        return sameName && sameDesc && sameBeefact;
+      });
+      if (isIncluded) {
+        return response
+          .status(409)
+          .send({ message: `${newBee.name} already exists for this location. Please try a PATCH instead.`});
+      }
+      database('bees')
+        .insert({ ...newBee, location_id: id }, 'id')
+        .then(bee => {
+          response
+            .status(201)
+            .send({ message: `Bee ${newBee.name} added.`});
+        })
+        .catch(error => {
+          response.status(500).json(error);
+        });
     });
 });
 
