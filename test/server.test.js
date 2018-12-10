@@ -173,7 +173,26 @@ describe("API Routes", () => {
         });
     });
 
-    // it("should add a new bee to the bees database if the request body is complete", done => {});
+    it("should add a new bee to the bees database if the request body is complete", done => {
+      const newBee = { name: "Bee", desc: "Yellow", beeFact: "doesnt like apples" };
+      const expected = { 
+        name: "Bee", 
+        desc: "Yellow", 
+        beeFact: "doesnt like apples",
+        id: 40,
+        location_id: 5 };
+      chai.request(app)
+        .post("/api/v1/locations/5")
+        .send(newBee)
+        .end((error, response) => {
+          database("bees")
+            .select()
+            .then(bees => {
+              expect(bees).to.deep.include(expected);
+              done();
+            });
+        });
+    });
 
     it("should respond with a status of 422 if the request body is incomplete, with instructions to make a complete request", done => {
       const newBee = { name: "", beeFact: "" };

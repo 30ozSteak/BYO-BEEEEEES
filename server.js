@@ -71,12 +71,12 @@ app.get("/api/v1/location/:id", (request, response) => {
 
 app.post("/api/v1/location/:id", (request, response) => {
   const newBee = request.body;
-  if (newBee.name && newBee.desc && newBee.beeFact) {
-    response.status(201).send({ message: `Bee ${newBee.name} added.` });
-  } else {
+  if (!(newBee.name && newBee.desc && newBee.beeFact)) {
     response.status(422).send({
       message: "You messed up"
     });
+  } else {
+    response.status(201).send({ message: `Bee ${newBee.name} added.` });
   }
 });
 
