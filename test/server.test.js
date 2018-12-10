@@ -175,17 +175,23 @@ describe("API Routes", () => {
 
     // it("should add a new bee to the bees database if the request body is complete", done => {});
 
-    // it("should respond with a status of 422 if the request body is incomplete, with instructions to make a complete request", done => {
-    //   const newBee = { name: "", beeFact: "" };
-    //   chai
-    //     .request(app)
-    //     .post("/api/v1/location/5")
-    //     .send(newBee)
-    //     .end((error, response) => {
-    //       expect(response).to.have.status(422);
-    //       done();
-    //     });
-    // });
+    it("should respond with a status of 422 if the request body is incomplete, with instructions to make a complete request", done => {
+      const newBee = { name: "", beeFact: "" };
+      chai
+        .request(app)
+        .post("/api/v1/location/5")
+        .send(newBee)
+        .end((error, response) => {
+          expect(response).to.have.status(422);
+          database('bees')
+            .where('location_id', 5)
+            .select()
+            .then(bees => {
+              expect(bees.length).to.be.within(4, 5);
+              done();
+            });
+        });
+    });
 
     // it("should respond with a status of 409 if the bee already exists, with instructions to do a PATCH instead", done => {});
   });
