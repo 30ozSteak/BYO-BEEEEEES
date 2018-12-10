@@ -84,7 +84,8 @@ app.post("/api/v1/location/:id", (request, response) => {
         const sameName = existingBee.name === newBee.name;
         const sameDesc = existingBee.desc === newBee.desc;
         const sameBeefact = existingBee.beefact === newBee.beefact;
-        return sameName && sameDesc && sameBeefact;
+        const sameLocation = existingBee.location_id === parseInt(id);
+        return sameName && sameDesc && sameBeefact && sameLocation;
       });
       if (isIncluded) {
         return response

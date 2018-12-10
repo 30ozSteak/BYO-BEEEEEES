@@ -213,19 +213,27 @@ describe("API Routes", () => {
     });
 
     it("should respond with a status of 409 if the bee already exists, with instructions to do a PATCH instead", done => {
-      const newBee = {        
-        name: "Lipotriches notabilis",
-        desc: "its a bee",
-        beefact:
-          "Bees have two stomachs - one stomach for eating and the other special stomach is for storing nectar collected from flowers or water so that they can carry it back to their hive."
-        };
-      chai
-        .request(app)
-        .post('/api/v1/location/5')
-        .send(newBee)
-        .end((error, response) => {
-          expect(response).to.have.status(409);
-          done();
+      database('bees')
+        .where('location_id', 5)
+        .select()
+        .then(bees => {
+          const aBee = bees[2];
+          const newBee = { 
+            name: aBee.name,
+            desc: aBee.desc,
+            beefact: aBee.beefact
+          };
+          return newBee;
+        })
+        .then(data => {
+          chai
+            .request(app)
+            .post('/api/v1/location/5')
+            .send(data)
+            .end((error, response) => {
+              expect(response).to.have.status(409);
+              done();
+            });
         });
     });
   });
