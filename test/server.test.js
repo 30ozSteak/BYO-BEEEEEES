@@ -161,7 +161,7 @@ describe("API Routes", () => {
       const newBee = {
         name: "Bee",
         desc: "Yellow",
-        beeFact: "doesnt like apples"
+        beefact: "doesnt like apples"
       };
       chai
         .request(app)
@@ -174,15 +174,15 @@ describe("API Routes", () => {
     });
 
     it("should add a new bee to the bees database if the request body is complete", done => {
-      const newBee = { name: "Bee", desc: "Yellow", beeFact: "doesnt like apples" };
+      const newBee = { name: "Bee", desc: "Yellow", beefact: "doesnt like apples" };
       const expected = { 
         name: "Bee", 
         desc: "Yellow", 
-        beeFact: "doesnt like apples",
+        beefact: "doesnt like apples",
         id: 40,
         location_id: 5 };
       chai.request(app)
-        .post("/api/v1/locations/5")
+        .post("/api/v1/location/5")
         .send(newBee)
         .end((error, response) => {
           database("bees")
@@ -195,7 +195,7 @@ describe("API Routes", () => {
     });
 
     it("should respond with a status of 422 if the request body is incomplete, with instructions to make a complete request", done => {
-      const newBee = { name: "", beeFact: "" };
+      const newBee = { name: "", beefact: "" };
       chai
         .request(app)
         .post("/api/v1/location/5")
