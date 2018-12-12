@@ -238,15 +238,42 @@ describe("API Routes", () => {
     });
   });
 
-  // describe("PATCH /api/v1/locations/:id", () => {
-  //   it("should respond with a status of 202 if the request body is appropriate", () => {});
+  describe("PATCH /api/v1/locations/:id", () => {
+    it("should respond with a status of 202 if the request body is appropriate", done => {
+      const updateLocation = {
+        name: 'BeeVille',
+        abbr: 'BB'
+      };
 
-  //   it("should patch the location if the request body is appropriate", () => {});
+      const anotherLocation = {
+        count: 5
+      };
 
-  //   it("should respond with a status of 422 if the request body is not appropriate", () => {});
+      chai
+        .request(app)
+        .patch('api/v1/locations/5')
+        .send(updateLocation)
+        .end((error, response) => {
+          expect(response).to.have.status(202);
+        });
 
-  //   it("should respond with a status of 404 if the location with that id doesn't exist, with instructions to do a POST instead", () => {});
-  // });
+      chai
+        .request(app)
+        .patch('api/v1/locations/5')
+        .send(anotherLocation)
+        .end((error, response) => {
+          expect(response).to.have.status(202);
+        });
+
+      done();
+    });
+
+    // it("should patch the location if the request body is appropriate", () => {});
+
+    // it("should respond with a status of 422 if the request body is not appropriate", () => {});
+
+    // it("should respond with a status of 404 if the location with that id doesn't exist, with instructions to do a POST instead", () => {});
+  });
 
   // describe("DELETE /api/v1/locations/:id", () => {
   //   it("should return a status of 202 if the location exists", () => {});

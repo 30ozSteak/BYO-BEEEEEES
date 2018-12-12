@@ -105,6 +105,10 @@ app.post("/api/v1/location/:id", (request, response) => {
     });
 });
 
+app.patch("api/v1/location/:id", (request, response) => {
+  
+});
+
 app.listen(app.get("port"), () => {
   console.log(`${app.name} is running on ${app.get("port")}.`);
 });
