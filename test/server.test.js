@@ -268,7 +268,28 @@ describe("API Routes", () => {
       done();
     });
 
-    // it("should patch the location if the request body is appropriate", () => {});
+    it("should patch the location if the request body is appropriate", done => {
+      const updateLocation = {
+        name: 'BeeVille',
+        abbr: 'BB'
+      };
+
+      chai
+        .request(app)
+        .patch('/api/v1/location/5')
+        .send(updateLocation)
+        .end((error, response) => {
+          expect(response).to.have.status(202);
+          database('locations')
+            .where('id', 5)
+            .select()
+            .then(location => {
+              expect(location.name).to.equal('BeeVille');
+              expect(location.abbr).to.equal('BB');
+              done();
+            });
+        });
+    });
 
     // it("should respond with a status of 422 if the request body is not appropriate", () => {});
 
