@@ -310,7 +310,7 @@ describe("API Routes", () => {
             .where('id', 5)
             .select()
             .then(location => {
-              expect(location.potato).to.be.undefined;
+              expect(location[0].potato).to.be.undefined;
             });
         });
 
@@ -324,14 +324,28 @@ describe("API Routes", () => {
             .where('id', 5)
             .select()
             .then(location => {
-              expect(location.count).to.not.be.undefined;
+              expect(location[0].count).to.not.be.undefined;
             });
         });
 
       done();
     });
 
-    // it("should respond with a status of 404 if the location with that id doesn't exist, with instructions to do a POST instead", () => {});
+    it("should respond with a status of 404 if the location with that id doesn't exist, with instructions to do a POST instead", done => {
+      const updateLocation = {
+        name: 'BeeVille',
+        abbr: 'BB'
+      };
+
+      chai
+        .request(app)
+        .patch('/api/v1/location/19')
+        .send(updateLocation)
+        .end((error, response) => {
+          expect(response).to.have.status(404);
+          done();
+        });
+    });
   });
 
   // describe("DELETE /api/v1/locations/:id", () => {

@@ -109,29 +109,41 @@ app.patch("/api/v1/location/:id", (request, response) => {
   const { id } = request.params;
   const { name, abbr, count } = request.body;
 
-  if (name && abbr) {
-    database('locations')
-      .where('id', id)
-      .update({ name, abbr })
-      .then(() => {
-        response.status(202).send({ message: `Location ${id} has been updated with ${request.body}` });
-      })
-      .catch(error => {
-        response.status(500).json(error);
-      });
-  } else if (count) {
-    database('locations')
-      .where('id', id)
-      .update({ count })
-      .then(() => {
-        response.status(202).send({ message: `Location ${id} has been updated with ${request.body}` });
-      })
-      .catch(error => {
-        response.status(500).json(error);
-      });
-  } else {
-    response.status(422).send({ message: 'To patch a location, please send an object with either of the following formats: { name: <String>, abbr: <String> } or { count: <Integer> }' });
-  }
+  database('locations')
+    .where('id', id)
+    .select()
+    .then(location => {
+      if (!location[0].name) {
+        throw new Error('The location does not exist. This triggers the catch block. Do not remove.');
+      }
+      if (name && abbr) {
+        database('locations')
+          .where('id', id)
+          .update({ name, abbr })
+          .then(() => {
+            response.status(202).send({ message: `Location ${id} has been updated with ${request.body}` });
+          })
+          .catch(error => {
+            response.status(500).json(error);
+          });
+      } else if (count) {
+        database('locations')
+          .where('id', id)
+          .update({ count })
+          .then(() => {
+            response.status(202).send({ message: `Location ${id} has been updated with ${request.body}` });
+          })
+          .catch(error => {
+            response.status(500).json(error);
+          });
+      } else {
+        response.status(422).send({ message: 'To patch a location, please send an object with either of the following formats: { name: <String>, abbr: <String> } or { count: <Integer> }' });
+      }
+    })
+    .catch(error => {
+      response.status(404).send({ message: `Location ${id} does not exist. Please create that location by making a post request to /api/v1/locations with a body that follows the following format: { name: <String> , abbr: <String>, count: <Integer> }.` });
+    });
+
 });
 
 app.listen(app.get("port"), () => {
