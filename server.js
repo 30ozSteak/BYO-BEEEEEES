@@ -130,7 +130,7 @@ app.patch("/api/v1/location/:id", (request, response) => {
         response.status(500).json(error);
       });
   } else {
-    response.status(418).send('I am a teapot');
+    response.status(422).send({ message: 'To patch a location, please send an object with either of the following formats: { name: <String>, abbr: <String> } or { count: <Integer> }' });
   }
 });
 

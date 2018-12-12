@@ -291,7 +291,45 @@ describe("API Routes", () => {
         });
     });
 
-    // it("should respond with a status of 422 if the request body is not appropriate", () => {});
+    it("should respond with a status of 422 if the request body is not appropriate", done => {
+      const updateLocation = {
+        potato: 'tuber'
+      };
+
+      const anotherLocation = {
+        count: undefined
+      };
+
+      chai
+        .request(app)
+        .patch('/api/v1/location/5')
+        .send(updateLocation)
+        .end((error, response) => {
+          expect(response).to.have.status(422);
+          database('locations')
+            .where('id', 5)
+            .select()
+            .then(location => {
+              expect(location.potato).to.be.undefined;
+            });
+        });
+
+      chai
+        .request(app)
+        .patch('/api/v1/location/5')
+        .send(anotherLocation)
+        .end((error, response) => {
+          expect(response).to.have.status(422);
+          database('locations')
+            .where('id', 5)
+            .select()
+            .then(location => {
+              expect(location.count).to.not.be.undefined;
+            });
+        });
+
+      done();
+    });
 
     // it("should respond with a status of 404 if the location with that id doesn't exist, with instructions to do a POST instead", () => {});
   });
