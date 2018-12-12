@@ -105,8 +105,10 @@ app.post("/api/v1/location/:id", (request, response) => {
     });
 });
 
-app.patch("api/v1/location/:id", (request, response) => {
-  
+app.patch("/api/v1/location/:id", (request, response) => {
+  const { id } = request.params;
+
+  response.status(202).send({ message: `Location ${id} has been updated with ${request.body}` });
 });
 
 app.listen(app.get("port"), () => {

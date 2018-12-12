@@ -238,7 +238,7 @@ describe("API Routes", () => {
     });
   });
 
-  describe("PATCH /api/v1/locations/:id", () => {
+  describe("PATCH /api/v1/location/:id", () => {
     it("should respond with a status of 202 if the request body is appropriate", done => {
       const updateLocation = {
         name: 'BeeVille',
@@ -251,7 +251,7 @@ describe("API Routes", () => {
 
       chai
         .request(app)
-        .patch('api/v1/locations/5')
+        .patch('/api/v1/location/5')
         .send(updateLocation)
         .end((error, response) => {
           expect(response).to.have.status(202);
@@ -259,7 +259,7 @@ describe("API Routes", () => {
 
       chai
         .request(app)
-        .patch('api/v1/locations/5')
+        .patch('/api/v1/location/5')
         .send(anotherLocation)
         .end((error, response) => {
           expect(response).to.have.status(202);
