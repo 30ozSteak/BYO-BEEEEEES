@@ -284,8 +284,8 @@ describe("API Routes", () => {
             .where('id', 5)
             .select()
             .then(location => {
-              expect(location.name).to.equal('BeeVille');
-              expect(location.abbr).to.equal('BB');
+              expect(location[0].name).to.equal('BeeVille');
+              expect(location[0].abbr).to.equal('BB');
               done();
             });
         });

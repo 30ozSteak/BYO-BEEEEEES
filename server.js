@@ -107,8 +107,31 @@ app.post("/api/v1/location/:id", (request, response) => {
 
 app.patch("/api/v1/location/:id", (request, response) => {
   const { id } = request.params;
+  const { name, abbr, count } = request.body;
 
-  response.status(202).send({ message: `Location ${id} has been updated with ${request.body}` });
+  if (name && abbr) {
+    database('locations')
+      .where('id', id)
+      .update({ name, abbr })
+      .then(() => {
+        response.status(202).send({ message: `Location ${id} has been updated with ${request.body}` });
+      })
+      .catch(error => {
+        response.status(500).json(error);
+      });
+  } else if (count) {
+    database('locations')
+      .where('id', id)
+      .update({ count })
+      .then(() => {
+        response.status(202).send({ message: `Location ${id} has been updated with ${request.body}` });
+      })
+      .catch(error => {
+        response.status(500).json(error);
+      });
+  } else {
+    response.status(418).send('I am a teapot');
+  }
 });
 
 app.listen(app.get("port"), () => {
