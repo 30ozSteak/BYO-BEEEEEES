@@ -162,7 +162,7 @@ app.delete("/api/v1/location/:id", (request, response) => {
               .where('id', id)
               .del()
               .then(() => {
-                response.status(202).send({ message: `Location ${id} has been deleted, you monster.` })
+                response.status(202).send({ message: `Location ${id} has been deleted, you monster.` });
               })
               .catch((error) => {
                 response.status(500).json(error);
@@ -186,9 +186,35 @@ app.get("/api/v1/bee/:id", (request, response) => {
     .select()
     .then(bee => {
       if (!bee[0].name) {
-        throw new Error('The location does not exist. This triggers the catch block. Do not remove.');
+        throw new Error('The bee does not exist. This triggers the catch block. Do not remove.');
       } else {
         response.status(200).json(bee[0]);
+      }
+    })
+    .catch(error => {
+      response.status(404).send({ message: `Bee ${id} does not exist yet.` });
+    });
+});
+
+app.delete("/api/v1/bee/:id", (request, response) => {
+  const { id } = request.params;
+
+  database('bees')
+    .where('id', id)
+    .select()
+    .then(bee => {
+      if (!bee[0].name) {
+        throw new Error('The bee does not exist. This triggers the catch block. Do not remove.');
+      } else {
+        database('bees')
+          .where('id', id)
+          .del()
+          .then(() => {
+            response.status(202).send({ message: `Bee ${id} has been deleted, you monster.` })
+          })
+          .catch(error => {
+            response.status(500).json(error);
+          });
       }
     })
     .catch(error => {

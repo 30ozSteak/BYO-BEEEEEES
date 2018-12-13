@@ -419,9 +419,25 @@ describe("API Routes", () => {
   //   it("should respond with a status of 404 if the bee with that id doesn't exist, with instructions to do a POST instead", () => {});
   // });
 
-  // describe("DELETE /api/v1/bees/:id", () => {
-  //   it("should return a status of 202 if the location exists", () => {});
+  describe("DELETE /api/v1/bee/:id", () => {
+    it("should return a status of 202 if the location exists", done => {
+      chai
+        .request(app)
+        .delete("/api/v1/bee/5")
+        .end((error, response) => {
+          expect(response).to.have.status(202);
+          done();
+        });
+    });
 
-  //   it("should return a status of 404 if the location does not exist", () => {});
-  // });
+    it("should return a status of 404 if the location does not exist", done => {
+      chai
+        .request(app)
+        .delete("/api/v1/bee/404")
+        .end((error, response) => {
+          expect(response).to.have.status(404);
+          done();
+        });
+    });
+  });
 });
