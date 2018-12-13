@@ -231,7 +231,7 @@ app.patch("/api/v1/bee/:id", (request, response) => {
       }
     })
     .catch(error => {
-      response.status(500).json(error);
+      response.status(404).send({ message: `Bee ${id} does not exist. Please create that bee by making a post request to /api/v1/location/[location_id] with a body that follows the following format: { name: <String> , desc: <String>, beefact: <String> }.` });
     });
 });
 

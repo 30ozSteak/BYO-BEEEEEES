@@ -498,7 +498,18 @@ describe("API Routes", () => {
         });
     });
 
-    // it("should respond with a status of 404 if the bee with that id doesn't exist, with instructions to do a POST instead", () => {});
+    it("should respond with a status of 404 if the bee with that id doesn't exist, with instructions to do a POST instead", done => {
+      const updateBee = { desc: "We've learned more about this bee! Yay!" };
+
+      chai
+        .request(app)
+        .patch("/api/v1/bee/404")
+        .send(updateBee)
+        .end((error, response) => {
+          expect(response).to.have.status(404);
+          done();
+        });
+    });
   });
 
   describe("DELETE /api/v1/bee/:id", () => {
