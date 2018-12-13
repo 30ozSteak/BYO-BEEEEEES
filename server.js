@@ -196,6 +196,45 @@ app.get("/api/v1/bee/:id", (request, response) => {
     });
 });
 
+app.patch("/api/v1/bee/:id", (request, response) => {
+  const { id } = request.params;
+  const { desc, beefact } = request.body;
+
+  database('bees')
+    .where('id', id)
+    .select()
+    .then(bee => {
+      if (!bee[0].name) {
+        throw new Error('The bee does not exist. This triggers the catch block. Do not remove.');
+      } else if (desc) {
+        database('bees')
+          .where('id', id)
+          .update({ desc })
+          .then(() => {
+            response.status(202).send({ message: `Bee ${id} has been updated with ${desc}` })
+          })
+          .catch(error => {
+            response.status(500).json(error);
+          });
+      } else if (beefact) {
+        database('bees')
+          .where('id', id)
+          .update({ beefact })
+          .then(() => {
+            response.status(202).send({ message: `Bee ${id} has been updated with ${beefact}` })
+          })
+          .catch(error => {
+            response.status(500).json(error);
+          });
+      } else {
+        response.status(422).send({ message: 'To patch a bee, please send an object with either of the following formats: { desc: <String> } or { beefact: <String> }' });
+      }
+    })
+    .catch(error => {
+      response.status(404).send({ message: `Bee ${id} does not exist. Please create that bee by making a post request to /api/v1/location/[location_id] with a body that follows the following format: { name: <String> , desc: <String>, beefact: <String> }.` });
+    });
+});
+
 app.delete("/api/v1/bee/:id", (request, response) => {
   const { id } = request.params;
 

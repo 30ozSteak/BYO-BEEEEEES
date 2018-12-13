@@ -2,7 +2,7 @@ const chai = require("chai");
 const expect = chai.expect;
 const chaiHTTP = require("chai-http");
 const app = require("../server.js");
-const environment = process.env.NODE_ENV || "testing";
+const environment = "testing";
 const configuration = require("../knexfile")[environment];
 const database = require("knex")(configuration);
 
@@ -112,6 +112,7 @@ describe("API Routes", () => {
         abbr: "AO",
         count: 127
       };
+
       chai
         .request(app)
         .post("/api/v1/locations")
@@ -261,17 +262,15 @@ describe("API Routes", () => {
         .send(updateLocation)
         .end((error, response) => {
           expect(response).to.have.status(202);
+          chai
+            .request(app)
+            .patch('/api/v1/location/5')
+            .send(anotherLocation)
+            .end((error, response) => {
+              expect(response).to.have.status(202);
+              done();
+            });
         });
-
-      chai
-        .request(app)
-        .patch("/api/v1/location/5")
-        .send(anotherLocation)
-        .end((error, response) => {
-          expect(response).to.have.status(202);
-        });
-
-      done();
     });
 
     it("should patch the location if the request body is appropriate", done => {
@@ -302,10 +301,6 @@ describe("API Routes", () => {
         potato: "tuber"
       };
 
-      const anotherLocation = {
-        count: undefined
-      };
-
       chai
         .request(app)
         .patch("/api/v1/location/5")
@@ -317,8 +312,15 @@ describe("API Routes", () => {
             .select()
             .then(location => {
               expect(location[0].potato).to.be.undefined;
+              done();
             });
         });
+    });
+
+    it("should respond with a status of 422 if the request body is not appropriate again", done => {
+      const anotherLocation = {
+        count: undefined
+      };
 
       chai
         .request(app)
@@ -331,10 +333,9 @@ describe("API Routes", () => {
             .select()
             .then(location => {
               expect(location[0].count).to.not.be.undefined;
+              done();
             });
         });
-
-      done();
     });
 
     it("should respond with a status of 404 if the location with that id doesn't exist, with instructions to do a POST instead", done => {
@@ -415,15 +416,108 @@ describe("API Routes", () => {
     });
   });
 
-  // describe("PATCH /api/v1/bees/:id", () => {
-  //   it("should respond with a status of 202 if the request body is appropriate", () => {});
+  describe("PATCH /api/v1/bee/:id", () => {
+    it("should respond with a status of 202 and update the bee if the request body is appropriate", done => {
+      const updateBee = { desc: "We've learned more about this bee! Yay!" };
 
-  //   it("should patch the bee if the request body is appropriate", () => {});
+      chai
+        .request(app)
+        .patch("/api/v1/bee/5")
+        .send(updateBee)
+        .end((error, response) => {
+          expect(response).to.have.status(202);
+          database('bees')
+            .where('id', 5)
+            .select()
+            .then(bee => {
+              expect(bee[0].desc).to.equal("We've learned more about this bee! Yay!");
+              database('bees')
+                .where('id', 3)
+                .select()
+                .then(bee => {
+                  expect(bee[0].desc).to.not.equal("We've learned more about this bee! Yay!");
+                  done();
+                });
+            });
+        });
+    });
 
-  //   it("should respond with a status of 422 if the request body is not appropriate", () => {});
+    it("should respond with a status of 202 and update the bee if the request body is appropriate again", done => {
+      const anotherBee = { beefact: "Bees are the bees knees." };
 
-  //   it("should respond with a status of 404 if the bee with that id doesn't exist, with instructions to do a POST instead", () => {});
-  // });
+      chai
+        .request(app)
+        .patch("/api/v1/bee/10")
+        .send(anotherBee)
+        .end((error, response) => {
+          expect(response).to.have.status(202);
+          database('bees')
+            .where('id', 10)
+            .select()
+            .then(bee => {
+              expect(bee[0].beefact).to.equal("Bees are the bees knees.");
+              database('bees')
+                .where('id', 6)
+                .select()
+                .then(bee => {
+                  expect(bee[0].beefact).to.not.equal("Bees are the bees knees.");
+                  done();
+                });
+            });
+        });
+    });
+
+    it("should respond with a status of 422 if the request body is not appropriate", done => {
+      const badUpdate = { cardigan: 42 };
+
+      chai
+        .request(app)
+        .patch("/api/v1/bee/5")
+        .send(badUpdate)
+        .end((error, response) => {
+          expect(response).to.have.status(422);
+          database('bees')
+            .where('id', 5)
+            .select()
+            .then(bee => {
+              expect(bee[0].cardigan).to.be.undefined;
+              done();
+            });
+        });
+    });
+
+    it("should respond with a status of 422 if the request body is not appropriate again", done => {
+      const badUpdate = { beefact: undefined };
+
+      chai
+        .request(app)
+        .patch("/api/v1/bee/5")
+        .send(badUpdate)
+        .end((error, response) => {
+          expect(response).to.have.status(422);
+          database('bees')
+            .where('id', 5)
+            .select()
+            .then(bee => {
+              expect(bee[0].beefact).to.not.be.undefined;
+              done();
+            });
+        });
+    });
+
+    it("should respond with a status of 404 if the bee with that id doesn't exist, with instructions to do a POST instead", done => {
+      const updateBee = { desc: "We've learned more about this bee! Yay!" };
+
+      chai
+        .request(app)
+        .patch("/api/v1/bee/404")
+        .send(updateBee)
+        .end((error, response) => {
+          expect(response).to.have.status(404);
+          done();
+        });
+    });
+  });
 
   describe("DELETE /api/v1/bee/:id", () => {
     it("should return a status of 202 if the bee exists", done => {
