@@ -294,7 +294,7 @@ describe("API Routes", () => {
       const updateLocation = {
         potato: 'tuber'
       };
-      
+
       chai
         .request(app)
         .patch('/api/v1/location/5')
@@ -309,7 +309,6 @@ describe("API Routes", () => {
               done();
             });
         });
-
     });
 
     it("should respond with a status of 422 if the request body is not appropriate again", done => {
