@@ -460,7 +460,43 @@ describe("API Routes", () => {
         });
     });
 
-    // it("should respond with a status of 422 if the request body is not appropriate", () => {});
+    it("should respond with a status of 422 if the request body is not appropriate", done => {
+      const badUpdate = { cardigan: 42 };
+
+      chai
+        .request(app)
+        .patch("/api/v1/bee/5")
+        .send(badUpdate)
+        .end((error, response) => {
+          expect(response).to.have.status(422);
+          database('bees')
+            .where('id', 5)
+            .select()
+            .then(bee => {
+              expect(bee[0].cardigan).to.be.undefined;
+              done();
+            });
+        });
+    });
+
+    it("should respond with a status of 422 if the request body is not appropriate again", done => {
+      const badUpdate = { beefact: undefined };
+
+      chai
+        .request(app)
+        .patch("/api/v1/bee/5")
+        .send(badUpdate)
+        .end((error, response) => {
+          expect(response).to.have.status(422);
+          database('bees')
+            .where('id', 5)
+            .select()
+            .then(bee => {
+              expect(bee[0].beefact).to.not.be.undefined;
+              done();
+            });
+        });
+    });
 
     // it("should respond with a status of 404 if the bee with that id doesn't exist, with instructions to do a POST instead", () => {});
   });

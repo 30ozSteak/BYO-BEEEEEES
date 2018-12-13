@@ -226,6 +226,8 @@ app.patch("/api/v1/bee/:id", (request, response) => {
           .catch(error => {
             response.status(500).json(error);
           });
+      } else {
+        response.status(422).send({ message: 'To patch a bee, please send an object with either of the following formats: { desc: <String> } or { beefact: <String> }' });
       }
     })
     .catch(error => {
