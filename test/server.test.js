@@ -174,14 +174,20 @@ describe("API Routes", () => {
     });
 
     it("should add a new bee to the bees database if the request body is complete", done => {
-      const newBee = { name: "Bee", desc: "Yellow", beefact: "doesnt like apples" };
-      const expected = { 
-        name: "Bee", 
-        desc: "Yellow", 
+      const newBee = {
+        name: "Bee",
+        desc: "Yellow",
+        beefact: "doesnt like apples"
+      };
+      const expected = {
+        name: "Bee",
+        desc: "Yellow",
         beefact: "doesnt like apples",
         id: 40,
-        location_id: 5 };
-      chai.request(app)
+        location_id: 5
+      };
+      chai
+        .request(app)
         .post("/api/v1/location/5")
         .send(newBee)
         .end((error, response) => {
@@ -202,8 +208,8 @@ describe("API Routes", () => {
         .send(newBee)
         .end((error, response) => {
           expect(response).to.have.status(422);
-          database('bees')
-            .where('location_id', 5)
+          database("bees")
+            .where("location_id", 5)
             .select()
             .then(bees => {
               expect(bees.length).to.be.within(4, 5);
@@ -213,12 +219,12 @@ describe("API Routes", () => {
     });
 
     it("should respond with a status of 409 if the bee already exists, with instructions to do a PATCH instead", done => {
-      database('bees')
-        .where('location_id', 5)
+      database("bees")
+        .where("location_id", 5)
         .select()
         .then(bees => {
           const aBee = bees[2];
-          const newBee = { 
+          const newBee = {
             name: aBee.name,
             desc: aBee.desc,
             beefact: aBee.beefact
@@ -228,7 +234,7 @@ describe("API Routes", () => {
         .then(data => {
           chai
             .request(app)
-            .post('/api/v1/location/5')
+            .post("/api/v1/location/5")
             .send(data)
             .end((error, response) => {
               expect(response).to.have.status(409);
@@ -241,8 +247,8 @@ describe("API Routes", () => {
   describe("PATCH /api/v1/location/:id", () => {
     it("should respond with a status of 202 if the request body is appropriate", done => {
       const updateLocation = {
-        name: 'BeeVille',
-        abbr: 'BB'
+        name: "BeeVille",
+        abbr: "BB"
       };
 
       const anotherLocation = {
@@ -251,7 +257,7 @@ describe("API Routes", () => {
 
       chai
         .request(app)
-        .patch('/api/v1/location/5')
+        .patch("/api/v1/location/5")
         .send(updateLocation)
         .end((error, response) => {
           expect(response).to.have.status(202);
@@ -259,7 +265,7 @@ describe("API Routes", () => {
 
       chai
         .request(app)
-        .patch('/api/v1/location/5')
+        .patch("/api/v1/location/5")
         .send(anotherLocation)
         .end((error, response) => {
           expect(response).to.have.status(202);
@@ -270,22 +276,22 @@ describe("API Routes", () => {
 
     it("should patch the location if the request body is appropriate", done => {
       const updateLocation = {
-        name: 'BeeVille',
-        abbr: 'BB'
+        name: "BeeVille",
+        abbr: "BB"
       };
 
       chai
         .request(app)
-        .patch('/api/v1/location/5')
+        .patch("/api/v1/location/5")
         .send(updateLocation)
         .end((error, response) => {
           expect(response).to.have.status(202);
-          database('locations')
-            .where('id', 5)
+          database("locations")
+            .where("id", 5)
             .select()
             .then(location => {
-              expect(location[0].name).to.equal('BeeVille');
-              expect(location[0].abbr).to.equal('BB');
+              expect(location[0].name).to.equal("BeeVille");
+              expect(location[0].abbr).to.equal("BB");
               done();
             });
         });
@@ -293,7 +299,7 @@ describe("API Routes", () => {
 
     it("should respond with a status of 422 if the request body is not appropriate", done => {
       const updateLocation = {
-        potato: 'tuber'
+        potato: "tuber"
       };
 
       const anotherLocation = {
@@ -302,12 +308,12 @@ describe("API Routes", () => {
 
       chai
         .request(app)
-        .patch('/api/v1/location/5')
+        .patch("/api/v1/location/5")
         .send(updateLocation)
         .end((error, response) => {
           expect(response).to.have.status(422);
-          database('locations')
-            .where('id', 5)
+          database("locations")
+            .where("id", 5)
             .select()
             .then(location => {
               expect(location[0].potato).to.be.undefined;
@@ -316,12 +322,12 @@ describe("API Routes", () => {
 
       chai
         .request(app)
-        .patch('/api/v1/location/5')
+        .patch("/api/v1/location/5")
         .send(anotherLocation)
         .end((error, response) => {
           expect(response).to.have.status(422);
-          database('locations')
-            .where('id', 5)
+          database("locations")
+            .where("id", 5)
             .select()
             .then(location => {
               expect(location[0].count).to.not.be.undefined;
@@ -333,13 +339,13 @@ describe("API Routes", () => {
 
     it("should respond with a status of 404 if the location with that id doesn't exist, with instructions to do a POST instead", done => {
       const updateLocation = {
-        name: 'BeeVille',
-        abbr: 'BB'
+        name: "BeeVille",
+        abbr: "BB"
       };
 
       chai
         .request(app)
-        .patch('/api/v1/location/19')
+        .patch("/api/v1/location/19")
         .send(updateLocation)
         .end((error, response) => {
           expect(response).to.have.status(404);
@@ -352,7 +358,7 @@ describe("API Routes", () => {
     it("should return a status of 202 if the location exists", done => {
       chai
         .request(app)
-        .delete('/api/v1/location/5')
+        .delete("/api/v1/location/5")
         .end((error, response) => {
           expect(response).to.have.status(202);
           done();
@@ -362,7 +368,7 @@ describe("API Routes", () => {
     it("should return a status of 404 if the location does not exist", done => {
       chai
         .request(app)
-        .delete('/api/v1/location/55')
+        .delete("/api/v1/location/55")
         .end((error, response) => {
           expect(response).to.have.status(404);
           done();
@@ -420,7 +426,7 @@ describe("API Routes", () => {
   // });
 
   describe("DELETE /api/v1/bee/:id", () => {
-    it("should return a status of 202 if the location exists", done => {
+    it("should return a status of 202 if the bee exists", done => {
       chai
         .request(app)
         .delete("/api/v1/bee/5")
@@ -430,7 +436,7 @@ describe("API Routes", () => {
         });
     });
 
-    it("should return a status of 404 if the location does not exist", done => {
+    it("should return a status of 404 if the bee does not exist", done => {
       chai
         .request(app)
         .delete("/api/v1/bee/404")

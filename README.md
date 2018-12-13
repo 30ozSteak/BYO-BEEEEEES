@@ -4,12 +4,12 @@
 
 ### Table of Contents
 
-- Locations
-- Bees
+- Locations 🍯
+- Bees 🐝
 
-## Bees
+## Locations
 
-- GET all bees by their location - /api/v1/locations
+- GET all location - /api/v1/locations
   Hitting this point will return an array of all bees in the DB, by location
 - Example Response
 
@@ -72,29 +72,62 @@
     ] ```
 ````
 
-- POST a new bee (all fields must be complete) POST /api/v1/bees/:id
+- POST a new location (all fields must be complete) POST /api/v1/location/:id
   Hitting this point and providing the necessary information will allow you to add a bee to the database
 - Example Response
 
 ```
+name: "Colorado",
+    abbr: "CO",
+    count: 12,
+    bees: [
       {
-        name: "Autonomous Drone Insect",
-        desc: "It's a harmless bee, I swear.",
-        beeFact: "Don't say anything negative on social media though."
+        name: "Agapostemon centratus",
+        desc: "its a bee",
+        beeFact: "Bees are classified as insects and they have six legs."
       },
 ```
 
-- PATCH edit a location (all fields must be complete) PATCH /api/v1/bees/:id
+- PATCH edit a location (all fields must be complete) PATCH /api/v1/location/:id
   Hitting this point and providing the necessary information will allow you to edit an existing bee in the database
 - Example Response
 
 ```
+name: "Haiti",
+    abbr: "HA",
+    count: 12,
+    bees: [
       {
-        name: "Autonomous Drone Insect",
-        desc: "Ok maybe these were a bad idea",
-        beeFact: "Don't say anything negative on social media though."
+        name: "Agapostemon centratus",
+        desc: "its a bee",
+        beeFact: "Bees are classified as insects and they have six legs."
       },
 ```
 
 - Delete a location (all fields must be complete) DELETE /api/v1/location/:id
   Delete a location from the DB
+
+# 🐝 BEES
+
+- GET information about a specific bee - /api/v1/bee/:id
+  Hitting this point will return a JSON object about the bee
+- Example Response
+
+  ```
+        name: "Euaspis abdominalis",
+        desc: "its a bee",
+        beeFact:
+          "The worker bees are all female and they do all the work for the hive. Workers perform the following tasks inside the hive as a House Bee: Cleaning, feeding the baby bees, feeding and taking care of the queen, packing pollen and nectar into cells, capping cells, building and repairing honeycombs, fanning to cool the hive and guarding the hive."
+  ```
+
+- Delete a bee to the database, because you're a scientist! - api/v1/bee/:id
+  Hitting this point will allow you to delete nefarious bees from our database
+- Example bee
+
+```
+        id: 500,
+        name: "Autonomous Drone Insect",
+        desc: "It's a harmless bee, I swear.",
+        beeFact: "Don't say anything negative on social media though."
+      },
+```
