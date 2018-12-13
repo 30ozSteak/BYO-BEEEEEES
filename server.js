@@ -196,6 +196,10 @@ app.get("/api/v1/bee/:id", (request, response) => {
     });
 });
 
+app.patch("/api/v1/bee/:id", (request, response) => {
+  
+});
+
 app.delete("/api/v1/bee/:id", (request, response) => {
   const { id } = request.params;
 
