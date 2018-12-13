@@ -370,11 +370,44 @@ describe("API Routes", () => {
     });
   });
 
-  // describe("GET /api/v1/bees/:id", () => {
-  //   it("should respond with a status of 200", () => {});
+  describe("GET /api/v1/bee/:id", () => {
+    it("should respond with a status of 200", done => {
+      chai
+        .request(app)
+        .get("/api/v1/bee/5")
+        .end((error, response) => {
+          expect(response).to.have.status(200);
+          done();
+        });
+    });
 
-  //   it("should return a json object with bee name, description, and bee fact", () => {});
-  // });
+    it("should return a json object with bee name, description, and bee fact", done => {
+      chai
+        .request(app)
+        .get("/api/v1/bee/5")
+        .end((error, response) => {
+          expect(response.body).to.be.an("object");
+          expect(response.body).to.have.property("name");
+          expect(response.body).to.have.property("desc");
+          expect(response.body).to.have.property("beefact");
+          expect(response.body.name).to.not.be.undefined;
+          expect(response.body.desc).to.not.be.undefined;
+          expect(response.body.beefact).to.not.be.undefined;
+          expect(response.body.id).to.equal(5);
+          done();
+        });
+    });
+
+    it("should respond with a status of 404 if the bee doesn't exist", done => {
+      chai
+        .request(app)
+        .get("/api/v1/bee/404")
+        .end((error, response) => {
+          expect(response).to.have.status(404);
+          done();
+        });
+    });
+  });
 
   // describe("PATCH /api/v1/bees/:id", () => {
   //   it("should respond with a status of 202 if the request body is appropriate", () => {});

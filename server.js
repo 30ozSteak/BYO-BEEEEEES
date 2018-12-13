@@ -178,6 +178,25 @@ app.delete("/api/v1/location/:id", (request, response) => {
     });
 });
 
+app.get("/api/v1/bee/:id", (request, response) => {
+  const { id } = request.params;
+
+  database('bees')
+    .where('id', id)
+    .select()
+    .then(bee => {
+      if (!bee[0].name) {
+        throw new Error('The location does not exist. This triggers the catch block. Do not remove.');
+      } else {
+        response.status(200).json(bee[0]);
+      }
+    })
+    .catch(error => {
+      response.status(404).send({ message: `Bee ${id} does not exist yet.` });
+    });
+});
+
+
 app.listen(app.get("port"), () => {
   console.log(`${app.name} is running on ${app.get("port")}.`);
 });
