@@ -410,7 +410,7 @@ describe("API Routes", () => {
   });
 
   describe("PATCH /api/v1/bee/:id", () => {
-    it("should respond with a status of 202 if the request body is appropriate", done => {
+    it("should respond with a status of 202 and update the bee if the request body is appropriate", done => {
       const updateBee = { desc: "We've learned more about this bee! Yay!" };
 
       chai
@@ -435,7 +435,7 @@ describe("API Routes", () => {
         });
     });
 
-    it("should respond with a status of 202 if the request body is appropriate again", done => {
+    it("should respond with a status of 202 and update the bee if the request body is appropriate again", done => {
       const anotherBee = { beefact: "Bees are the bees knees." };
 
       chai
@@ -459,8 +459,6 @@ describe("API Routes", () => {
             });
         });
     });
-
-    // it("should patch the bee if the request body is appropriate", () => {});
 
     // it("should respond with a status of 422 if the request body is not appropriate", () => {});
 

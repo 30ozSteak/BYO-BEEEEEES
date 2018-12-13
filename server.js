@@ -197,7 +197,40 @@ app.get("/api/v1/bee/:id", (request, response) => {
 });
 
 app.patch("/api/v1/bee/:id", (request, response) => {
-  
+  const { id } = request.params;
+  const { desc, beefact } = request.body;
+
+  database('bees')
+    .where('id', id)
+    .select()
+    .then(bee => {
+      if (!bee[0].name) {
+        throw new Error('The bee does not exist. This triggers the catch block. Do not remove.');
+      } else if (desc) {
+        database('bees')
+          .where('id', id)
+          .update({ desc })
+          .then(() => {
+            response.status(202).send({ message: `Bee ${id} has been updated with ${desc}` })
+          })
+          .catch(error => {
+            response.status(500).json(error);
+          });
+      } else if (beefact) {
+        database('bees')
+          .where('id', id)
+          .update({ beefact })
+          .then(() => {
+            response.status(202).send({ message: `Bee ${id} has been updated with ${beefact}` })
+          })
+          .catch(error => {
+            response.status(500).json(error);
+          });
+      }
+    })
+    .catch(error => {
+      response.status(500).json(error);
+    });
 });
 
 app.delete("/api/v1/bee/:id", (request, response) => {
