@@ -112,6 +112,7 @@ describe("API Routes", () => {
         abbr: "AO",
         count: 127
       };
+
       chai
         .request(app)
         .post("/api/v1/locations")
@@ -255,17 +256,15 @@ describe("API Routes", () => {
         .send(updateLocation)
         .end((error, response) => {
           expect(response).to.have.status(202);
+          chai
+            .request(app)
+            .patch('/api/v1/location/5')
+            .send(anotherLocation)
+            .end((error, response) => {
+              expect(response).to.have.status(202);
+              done();
+            });
         });
-
-      chai
-        .request(app)
-        .patch('/api/v1/location/5')
-        .send(anotherLocation)
-        .end((error, response) => {
-          expect(response).to.have.status(202);
-        });
-
-      done();
     });
 
     it("should patch the location if the request body is appropriate", done => {
@@ -295,11 +294,7 @@ describe("API Routes", () => {
       const updateLocation = {
         potato: 'tuber'
       };
-
-      const anotherLocation = {
-        count: undefined
-      };
-
+      
       chai
         .request(app)
         .patch('/api/v1/location/5')
@@ -311,8 +306,16 @@ describe("API Routes", () => {
             .select()
             .then(location => {
               expect(location[0].potato).to.be.undefined;
+              done();
             });
         });
+
+    });
+
+    it("should respond with a status of 422 if the request body is not appropriate again", done => {
+      const anotherLocation = {
+        count: undefined
+      };
 
       chai
         .request(app)
@@ -325,10 +328,9 @@ describe("API Routes", () => {
             .select()
             .then(location => {
               expect(location[0].count).to.not.be.undefined;
+              done();
             });
         });
-
-      done();
     });
 
     it("should respond with a status of 404 if the location with that id doesn't exist, with instructions to do a POST instead", done => {
