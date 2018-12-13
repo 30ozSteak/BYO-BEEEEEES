@@ -348,11 +348,27 @@ describe("API Routes", () => {
     });
   });
 
-  // describe("DELETE /api/v1/locations/:id", () => {
-  //   it("should return a status of 202 if the location exists", () => {});
+  describe("DELETE /api/v1/location/:id", () => {
+    it("should return a status of 202 if the location exists", done => {
+      chai
+        .request(app)
+        .delete('/api/v1/location/5')
+        .end((error, response) => {
+          expect(response).to.have.status(202);
+          done();
+        });
+    });
 
-  //   it("should return a status of 404 if the location does not exist", () => {});
-  // });
+    it("should return a status of 404 if the location does not exist", done => {
+      chai
+        .request(app)
+        .delete('/api/v1/location/55')
+        .end((error, response) => {
+          expect(response).to.have.status(404);
+          done();
+        });
+    });
+  });
 
   // describe("GET /api/v1/bees/:id", () => {
   //   it("should respond with a status of 200", () => {});

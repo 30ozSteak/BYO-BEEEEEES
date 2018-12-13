@@ -115,8 +115,7 @@ app.patch("/api/v1/location/:id", (request, response) => {
     .then(location => {
       if (!location[0].name) {
         throw new Error('The location does not exist. This triggers the catch block. Do not remove.');
-      }
-      if (name && abbr) {
+      } else if (name && abbr) {
         database('locations')
           .where('id', id)
           .update({ name, abbr })
@@ -143,7 +142,40 @@ app.patch("/api/v1/location/:id", (request, response) => {
     .catch(error => {
       response.status(404).send({ message: `Location ${id} does not exist. Please create that location by making a post request to /api/v1/locations with a body that follows the following format: { name: <String> , abbr: <String>, count: <Integer> }.` });
     });
+});
 
+app.delete("/api/v1/location/:id", (request, response) => {
+  const { id } = request.params;
+
+  database('locations')
+    .where('id', id)
+    .select()
+    .then(location => {
+      if (!location[0].name) {
+        throw new Error('The location does not exist. This triggers the catch block. Do not remove.');
+      } else {
+        database('bees')
+          .where('location_id', id)
+          .del()
+          .then(() => {
+            database('locations')
+              .where('id', id)
+              .del()
+              .then(() => {
+                response.status(202).send({ message: `Location ${id} has been deleted, you monster.` })
+              })
+              .catch((error) => {
+                response.status(500).json(error);
+              });
+          })
+          .catch(error => {
+            response.status(500).json(error);
+          });
+      }
+    })
+    .catch(error => {
+      response.status(404).send({ message: `Location ${id} does not exist. Please create that location by making a post request to /api/v1/locations with a body that follows the following format: { name: <String> , abbr: <String>, count: <Integer> }.` });
+    });
 });
 
 app.listen(app.get("port"), () => {
