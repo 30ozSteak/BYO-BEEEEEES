@@ -196,6 +196,9 @@ app.get("/api/v1/bee/:id", (request, response) => {
     });
 });
 
+app.use((request, response, next) => {
+  response.status(404).send({ message: "We couldn't find what you were looking for! Please try /api/v1/locations instead." });
+});
 
 app.listen(app.get("port"), () => {
   console.log(`${app.name} is running on ${app.get("port")}.`);
